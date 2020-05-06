@@ -1,0 +1,265 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main_no_sidebar.html">
+<div layout:fragment="myContent" >
+
+
+    <style>
+
+        /*
+        .collection {
+            display: grid;
+            grid-auto-columns: max-content;
+            grid-auto-flow: dense;
+            grid-auto-rows: minmax(100px, auto);
+            grid-gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+            margin: 60px auto;
+            max-width: 950px;
+        }
+
+        .product {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background: #f2f2f2;
+        }
+
+        .product__image {
+            background-color: #e5e5e5;
+            display: block;
+            min-height: 220px;
+            width: 100%;
+        }
+        .product__name p {
+            text-align: center;
+            margin-top: 15px;
+            font-family: sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .product__name p a {
+            text-align: center;
+            color: #000000;
+            text-decoration: none;
+        }
+        .product__price p {
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+       */
+
+
+        .card-product:after {
+            content: "";
+            display: table;
+            clear: both;
+            visibility: hidden;
+        }
+        .card-product .price-new, .card-product .price {
+            margin-right: 5px; }
+        .card-product .price-old {
+            color: #999; }
+        .card-product .img-wrap {
+            border-radius: 3px 3px 0 0;
+            overflow: hidden;
+            position: relative;
+            height: 220px;
+            text-align: center; }
+        .card-product .img-wrap img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: cover; }
+
+        .card-product .info-wrap {
+            overflow: hidden;
+            padding: 15px;
+            border-top: 1px solid #eee; }
+        .card-product .action-wrap {
+            padding-top: 4px;
+            margin-top: 4px; }
+        .card-product .bottom-wrap {
+            padding: 15px;
+            border-top: 1px solid #eee; }
+        .card-product .title {
+            margin-top: 0; }
+    </style>
+
+    <!--
+
+   <table cellpadding="20" class="table table-stripped" >
+
+
+       <thead>
+       <tr>
+
+           <th th:text = "#{label.name}">
+           </th>
+           <th th:text = "#{label.price}">
+           </th>
+           <th th:text = "#{label.postedat}">
+           </th>
+           <th sec:authorize="hasAnyRole('ROLE_MODERATOR')" th:text="#{label.edit}">
+           </th>
+           <th sec:authorize="hasAnyRole('ROLE_MODERATOR')" th:text="#{label.delete}">
+           </th>
+           <th th:text = "#{label.details}">
+           </th>
+
+       </tr>
+       </thead>
+
+
+
+    <tr th:each = "i:${itemler}">
+        <div class="p-cell">
+
+        <td class="p-name" th:text="${i.name}"></td></br>
+
+        <td class="p-price" th:text="${i.price}"></td></br>
+
+        <td th:text="${i.postDate}"></td>
+
+
+        <td>
+            <img class="p-img" th:src="@{'images/'+${i.file}}"/>
+        </td>
+
+        <td sec:authorize="hasAnyRole('ROLE_MODERATOR')">
+            <a th:href = "@{'/editItem/'+${i.id}}" th:text="#{label.edit}"></a>
+        </td>
+        <td sec:authorize="hasAnyRole('ROLE_MODERATOR')">
+            <a th:href = "@{'/deleteItem/'+${i.id}}" th:text="#{label.delete}"></a>
+        </td>
+        <td>
+            <a th:href = "@{'/readMore/'+${i.id}}" th:text="#{label.readmore}"></a>
+        </td>
+
+
+        </div>
+    </tr>
+
+
+    </table>
+
+-->
+
+    <!--
+        <table id="p-table">
+            <tr th:each = "i:${itemler}">
+                <td><div class="p-cell">
+                    <img th:src="@{'images/'+${i.file}}" style="width: 200px" />
+                    <div class="p-name"> <p class="p-name" th:text="${i.name}"></p></div>
+                    <div class="p-price"> <p class="p-price" th:text="${i.price}"></p></div>
+                    <div class="p-price"> <p th:text="${i.postDate}"></p></div>
+                    <div class="p-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                    <div sec:authorize="hasAnyRole('ROLE_MODERATOR')">
+                        <a th:href = "@{'/editItem/'+${i.id}}" th:text="#{label.edit}"></a>
+                    </div>
+                    <div sec:authorize="hasAnyRole('ROLE_MODERATOR')">
+                        <a th:href = "@{'/deleteItem/'+${i.id}}" th:text="#{label.delete}"></a>
+                    </div>
+                    <div>
+                        <a th:href = "@{'/readMore/'+${i.id}}" th:text="#{label.readmore}"></a>
+                    </div>
+
+                    <button class="p-add">Add to Cart</button>
+                </div></td>
+            </tr>
+        </table>
+        -->
+<!--
+
+    <div class="collection">
+        <div th:each = "i:${itemler}">
+            <div class="product" style="cursor: pointer;"  th:onclick = "th:href = @{'/readMore/'+${i.id}}">
+
+                <img class="product__image" th:src="@{'images/'+${i.file}}" />
+
+                <div class="product__name">
+                    <p th:text="${i.name}">
+                </div>
+
+                <div>
+                    <p th:text="${i.characteristics}" style=" text-align: center;">
+                </div>
+
+                <div class="product__price">
+                    <p th:text="${i.price}+'$'">
+                </div>
+
+
+
+                <div sec:authorize="hasAnyRole('ROLE_MODERATOR')" style="text-align: center">
+                    <a th:href = "@{'/editItem/'+${i.id}}" th:text="#{label.edit}"></a>
+                </div>
+                <div sec:authorize="hasAnyRole('ROLE_MODERATOR')" style="text-align: center">
+                    <a th:href = "@{'/deleteItem/'+${i.id}}" th:text="#{label.delete}"></a>
+                </div>
+                <div style="text-align: center">
+                    <a th:href = "@{'/readMore/'+${i.id}}" th:text="#{label.readmore}"></a>
+                </div>
+
+                <input type="submit" th:value="#{label.addToCart}" style="margin-left: 50px"/>
+
+
+            </div>
+        </div>
+    </div>
+
+-->
+
+
+
+    <div class="container" style="margin-left: 200px;margin-top: 50px;margin-bottom: 100px">
+
+        <div class="row">
+        <div th:each = "i:${itemler}">
+
+
+            <a class="btn-overlay" th:href = "@{'/readMore/'+${i.id}}" style="cursor: pointer;">
+            <div>
+
+                <figure class="card card-product" style="width: 220px;margin-left: 30px">
+                    <div class="img-wrap">
+                        <img class="product__image" th:src="@{'images/'+${i.file}}" />
+                       <!-- <a class="btn-overlay" th:href = "@{'/readMore/'+${i.id}}"  th:text="#{label.readmore}"><i class="fa fa-search-plus"></i></a> -->
+                        <div sec:authorize="hasAnyRole('ROLE_MODERATOR')" style="text-align: center">
+                            <a th:href = "@{'/editItem/'+${i.id}}" th:text="#{label.edit}"></a>
+                        </div>
+                        <div sec:authorize="hasAnyRole('ROLE_MODERATOR')" style="text-align: center">
+                            <a th:href = "@{'/deleteItem/'+${i.id}}" th:text="#{label.delete}"></a>
+                        </div>
+                    </div>
+
+
+                    <figcaption class="info-wrap">
+                        <h6 class="title text-dots"><a href="#" th:text="${i.name}"></a></h6>
+                        <div class="action-wrap">
+                           <!-- <a href="#" class="btn btn-primary btn-sm float-right"> Order </a> -->
+
+
+                                <a th:href = "@{'/addBasket/'+${i.id}}" th:text="#{label.addToCart}" class="btn btn-primary btn-sm float-right"></a>
+
+
+                            <div class="price-wrap h5">
+                                <span class="price-new" th:text="${i.price} + '$'"></span>
+                            </div> <!-- price-wrap.// -->
+                        </div> <!-- action-wrap -->
+                    </figcaption>
+                </figure> <!-- card // -->
+            </div> <!-- col // -->
+
+            </a>
+        </div> <!-- row.// -->
+
+        </div>
+    </div>
+    <!--container end-->
+
+
+</div>
+</html>

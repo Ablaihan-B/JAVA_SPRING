@@ -1,0 +1,208 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main_no_sidebar.html">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!--
+<div layout:fragment="myContent">
+
+
+    <label th:text="#{label.name} ">  </label>
+    <p th:text = "${item.categories.name}"></p>
+
+    <label th:text="#{label.charac} ">  </label>
+    <p th:text = "${item.characteristics}"></p>
+
+    <label th:text="#{label.price} ">  </label>
+    <p th:text = "${item.price}"></p>
+
+    <label th:text="#{label.postedby} ">   </label>
+    <p th:text = "${time}"></p>
+
+
+    <form th:action="@{'/addcomment'}" method="post">
+        <label th:text="#{label.comment}"></label>
+        <input type="text" name="comment">
+        <input type="hidden" th:value="${item.id}" name="id">
+        <button class="btn btn-primary" th:text="#{label.addcomment}"></button>
+    </form>
+    <table cellpadding="20" class="table table-stripped">
+        <thed>
+            <tr>
+                <th th:text="#{label.comment2}">
+
+                </th>
+                <th th:text="#{label.author}">
+
+                </th>
+                <th th:text="#{label.edit}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+
+                </th>
+                <th  th:text="#{label.delete}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+
+                </th>
+                <th th:text="#{label.delete}" sec:authorize="hasAnyRole('ROLE_MODERATOR','ROLE_ADMIN')">
+                </th>
+            </tr>
+        </thed>
+
+        <tbody>
+        <tr th:each = "com : ${commenty}">
+            <td th:text = "${com.comment}"></td>
+            <td th:text="${com.author.name}"></td>
+            <td>
+                <a th:href = "@{'/editcomm/'+${com.id}}"  th:text="#{label.edit}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')"></a>
+            </td>
+            <td>
+                <a th:href = "@{'/removecomm/'+${com.id}}"  th:text="#{label.delete}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')"></a>
+            </td>
+
+            <td sec:authorize="hasAnyRole('ROLE_MODERATOR','ROLE_ADMIN')">
+                <a th:href = "@{'/removecomm2/'+${com.id}}" th:text="#{label.delete}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>
+
+-->
+
+
+
+<div layout:fragment="myContent">
+<div class="container">
+
+
+
+    <div class="card">
+        <div class="row">
+            <aside class="col-sm-5 border-right">
+                <article class="gallery-wrap">
+                    <div class="img-big-wrap">
+                        <img  style="width: 459px" th:src="@{'/images/'+${item.file}}" />
+                    </div> <!-- slider-product.// -->
+
+                </article> <!-- gallery-wrap .end// -->
+            </aside>
+            <aside class="col-sm-7">
+                <article class="card-body p-5">
+                    <h3 class="title mb-3" th:text="${item.name} "></h3>
+
+                    <p class="price-detail-wrap">
+                        <span class="price h3 text-warning">
+                            <span class="currency">US $</span><span class="num" th:text = "${item.price}">></span>
+                        </span>
+                    </p> <!-- price-detail-wrap .// -->
+                    <dl class="item-property">
+                        <dt>Description</dt>
+                        <dd><p th:text = "${item.characteristics}"></p></dd>
+                    </dl>
+
+
+                    <dl class="param param-feature">
+                        <dt>Delivery</dt>
+                        <dd>Russia, USA, and Europe</dd>
+                    </dl>  <!-- item-property-hor .// -->
+
+                    <!--
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <dl class="param param-inline">
+                                <dt>Quantity: </dt>
+                                <dd>
+                                    <select class="form-control form-control-sm" style="width:70px;">
+                                        <option> 1 </option>
+                                        <option> 2 </option>
+                                        <option> 3 </option>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </div>
+                    <hr> -->
+
+                    <!-- <a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a> -->
+                    <!--  <a th:href = "@{'/addBasket/'+${item.id}}" th:text="#{label.addToCart}" class="btn btn-primary btn-sm float-right"></a> -->
+                    <div style="margin-top: 140px">
+                        <a th:href = "@{'/addBasket/'+${item.id}}" class="btn btn-lg btn-outline-primary text-uppercase" th:text="#{label.addToCart}"> <i class="fas fa-shopping-cart"></i> </a>
+                        <a th:href = "@{'/deleteItem/'+${item.id}}" class="btn btn-lg btn-outline-primary text-uppercase" th:text="#{label.delete}"> <i class="fas fa-shopping-cart" sec:authorize="hasAnyRole('ROLE_ADMIN')"></i> </a>
+                        <a th:href = "@{'/editItem/'+${item.id}}" class="btn btn-lg btn-outline-primary text-uppercase" th:text="#{label.edit}"> <i class="fas fa-shopping-cart" sec:authorize="hasAnyRole('ROLE_ADMIN')"></i> </a>
+                    </div>
+                </article> <!-- card-body.// -->
+            </aside> <!-- col.// -->
+        </div> <!-- row.// -->
+    </div> <!-- card.// -->
+</div>
+
+
+
+
+
+
+    <div class="container" style="margin-top: 50px">
+        <div class="row">
+            <div class="col-12">
+                <div class="comments">
+                    <div class="comments-details">
+                        <span class="total-comments comments-sort" th:text="#{label.comment}"></span>
+                    </div>
+
+
+                    <div class="comment-box add-comment">
+
+                        <span class="commenter-name">
+                                <form th:action="@{'/addcomment'}" method="post">
+                                    <input type="text" name="comment">
+                                    <input type="hidden" th:value="${item.id}" name="id">
+                                    <button class="btn btn-primary" th:text="#{label.addcomment}"></button>
+                                </form>
+                        </span>
+
+                    </div>
+
+
+
+
+                    <div style="border: #0F80BB;border: 5px;margin-bottom: 100px">
+                        <div th:each = "com : ${commenty}">
+                        <span class="commenter-name">
+                            <a href="#" th:text = "${com.author.name} + ' ' + ${com.author.surname} "></a> <span class="comment-time" th:text = "${com.createdAt}"></span>
+                         </span>
+
+                        <p class="comment-txt more" th:text = "${com.comment}"></p>
+
+
+                                <a th:href = "@{'/editcomm/'+${com.id}}"  th:text="#{label.edit}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')"></a>
+
+
+                                <a th:href = "@{'/removecomm/'+${com.id}}"  th:text="#{label.delete}" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')"></a>
+
+
+                                <a th:href = "@{'/removecomm2/'+${com.id}}" th:text="#{label.delete}" sec:authorize="hasAnyRole('ROLE_MODERATOR','ROLE_ADMIN')"></a>
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main_no_sidebar.html">
+
+<div layout:fragment="myContent" >
+
+
+    <form th:action="@{'/addItem'}" method="post" style="width: 400px;margin-left: 450px;margin-top: 100px" enctype="multipart/form-data">
+
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm" th:text="#{label.name}"></label>
+            <input  name="name" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm2" th:text="#{label.charac}"></label>
+            <input  name="characteristics" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm3" th:text="#{label.price}"></label>
+            <input name="price" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+        <label th:text="#{label.choosecategory}"></label>
+        <div class="form-group blu-margin">
+            <select name="id" class="custom-select mr-sm-2" id="inlineFormCustomSelect2">
+                <option th:each="c : ${categorialar}"
+                        th:value="${c.id}"
+                        th:utext="${c.name}">
+                </option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm4" th:text="#{label.image}"></label>
+            <input name="file" type="file" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+
+        <button class="btn btn-primary" style="margin-left: 300px" th:text="#{label.additem}"></button><p></p>
+    </form>
+
+
+
+
+
+
+
+
+
+</div>
+</html>

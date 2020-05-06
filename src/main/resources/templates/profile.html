@@ -1,0 +1,124 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main_no_sidebar.html">
+
+
+
+<!--
+
+<div layout:fragment="myContent" >
+    <div class="row">
+        <div class="col-sm-8">
+            <h3>
+                Name: <span th:text = "${user.name}"></span>
+            </h3>
+            <h3>
+                Surname: <span th:text = "${user.surname}"></span>
+            </h3>
+        </div>
+    </div>
+</div>
+</html>
+
+-->
+
+<html>
+
+<div layout:fragment="myContent" >
+    <div class="container">
+        <div class="row my-2">
+            <div class="col-lg-8 order-lg-2">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a href="" data-target="#profile" data-toggle="tab" class="nav-link active" th:text = "#{label.profile}"></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link"  th:text = "#{label.updatedata}"></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="" data-target="#password" data-toggle="tab" class="nav-link"  th:text = "#{label.updatepassword}"></a>
+                    </li>
+                </ul>
+                <div class="tab-content py-4">
+                    <div class="tab-pane active" id="profile">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5><span th:text = "${user.name} + ' ' + ${user.surname}"></span></h5>
+                                <p>
+                                    <span th:text = "${user.email}"></span>
+                                </p>
+                                <p th:each="i:${user.roles}">
+                                    <span th:text = "${i.role}"></span>
+                                </p>
+
+                            </div>
+
+
+                        </div>
+                        <!--/row-->
+                    </div>
+
+
+                    <div class="tab-pane" id="edit">
+
+
+                        <form  th:action="@{'/updatedata'}" method="post" style="width: 400px">
+
+                            <div class="form-group">
+                                <label for="formGroupExampleInput" class="bmd-label-floating" style="color: black" th:text="#{label.name2}"></label>
+                                <input type="text" class="form-control" id="formGroupExampleInput" name="name" th:placeholder = "${user.name}">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2" class="bmd-label-floating" style="color: black" th:text="#{label.surname2}"></label>
+                                <input type="text" class="form-control" id="formGroupExampleInput2" name="surname" th:placeholder = "${user.surname}" >
+                            </div>
+                            <button class="btn btn-success" style="margin-left: 300px" th:text="#{label.update2}"></button>
+                        </form>
+
+                    </div>
+
+                    <div class="tab-pane" id="password">
+                        <form th:action="@{'/updatepassword'}" method="post" style="width: 400px;">
+                            <div class="form-group">
+                                <label th:text="#{label.oldpassword}">
+
+                                </label>
+                                <input type="password" name="old" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label th:text="#{label.newpassword}">
+
+                                </label>
+                                <input type="password" name="new" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label th:text="#{label.repassword}">
+
+                                </label>
+                                <input type="password" name="newpass" class="form-control">
+                            </div>
+                            <input type="hidden" name="id" value="${user.id}">
+                            <button class="btn btn-success" style="margin-left: 300px" th:text="#{label.update2}"></button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-4 order-lg-1 text-center">
+                <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                <h6 class="mt-2" th:text="#{label.photo}"></h6>
+                <label class="custom-file">
+                    <input type="file" id="file" class="custom-file-input">
+                    <span class="custom-file-control" th:text="#{label.chFile}"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
+
+

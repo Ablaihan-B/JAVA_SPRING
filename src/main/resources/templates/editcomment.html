@@ -1,0 +1,14 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main.html">
+<div layout:fragment="myContent" >
+    <form th:action="@{'/editcomment'}" method="post">
+        <div class="form-group">
+            <label th:text = "${come.comment}"></label>
+            <input type="text" name="content">
+        </div>
+        <button class="btn btn-success" th:text="#{label.update2}"></button>
+    </form>
+</div>
+</html>

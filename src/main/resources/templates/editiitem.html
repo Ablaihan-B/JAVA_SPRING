@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main.html">
+<div layout:fragment="myContent" >
+    <form th:action="@{'/editItem'}"  style="width: 400px;margin-left: 450px;margin-top: 100px" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label th:text="#{label.name2}"></label>
+            <input type="text" name="name" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label th:text="#{label.charac}"></label>
+            <input type="text" name="characteristics" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label th:text="#{label.price}"></label>
+            <input type="number" name="price" class="form-control">
+        </div>
+
+        <label th:text="#{label.category}"></label>
+        <div class="form-group blu-margin">
+            <select name="id" class="custom-select mr-sm-2" id="inlineFormCustomSelect2">
+                <option th:each="c : ${categorialar}"
+                        th:value="${c.id}"
+                        th:utext="${c.name}">
+                </option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm4" th:text="#{label.image}"></label>
+            <input name="file" type="file" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+
+        <button class="btn btn-primary" style="margin-left: 300px"  th:text="#{label.update2}"></button><p></p>
+    </form>
+</div>
+</html>
