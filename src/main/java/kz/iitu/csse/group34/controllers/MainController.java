@@ -48,14 +48,29 @@ public class MainController {
     private ItemService itemService;
     @Autowired
     private BasketRepository basketRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     @GetMapping(value = "/")
     public String index(ModelMap model, @RequestParam(name = "page", defaultValue = "1") int page){
+        int pageSize = 8;
 
-        List<Items> items = itemsRepository.findAllByDeletedAtNullOrderByCreatedAtDesc();
+        if(page<1){
+            page = 1;
+        }
+
+        int totalItems = itemsRepository.countAllByDeletedAtNull();
+        int tabSize = (totalItems+pageSize-1)/pageSize;
+        Pageable pageable = PageRequest.of(page-1, pageSize);
+        model.addAttribute("tabSize", tabSize);
+        List<Items> items = itemsRepository.findAllByDeletedAtNull(pageable);
         model.addAttribute("itemler", items);
+        List<Categories> categories = categoriesRepository.findAllByIdGreaterThan(0L);
+        model.addAttribute("categorialar", categories);
         return "index";
     }
+
+
     @GetMapping(value = "/addItem")
     public String addItem(ModelMap model, @RequestParam(name = "page", defaultValue = "1") int page){
         List<Categories> categories = categoriesRepository.findAllByIdGreaterThan(0L);
@@ -481,7 +496,7 @@ public class MainController {
 
 
     @GetMapping(path = "/mybaskets")
-    public String mybas(ModelMap model) {
+    public String mybas(ModelMap model,HttpSession session) {
         Users u=getUserData();
         if(u!=null){
             List<Basket> baskets=basketRepository.findAllByDeletedAtNullOrderByCreatedAtDesc();
@@ -491,6 +506,19 @@ public class MainController {
                     newbaskets.add(b);
                 }
             }
+
+            int amount = 0;
+            double total = 0;
+            for(Basket b:newbaskets){
+                total += b.getItems().getPrice();
+                amount++;
+            }
+
+            session.setAttribute("Price",total);
+            session.setAttribute("Card",newbaskets);
+
+            model.addAttribute("basketsTotalPrice",total);
+            model.addAttribute("basketsAmount",amount);
             model.addAttribute("baskets",newbaskets);
             return "mybaskets";
         }
@@ -540,6 +568,87 @@ public class MainController {
         basketRepository.delete(basket);
         return "redirect:/";
     }
+
+
+    @GetMapping(value = "/order")
+    public String order(ModelMap model) {
+        return "order";
+    }
+
+    @PostMapping(value = "/order")
+    public String order(
+            @RequestParam(name = "city") String city,
+            @RequestParam(name = "address") String address,
+            @RequestParam(name = "delivery") String delivery,
+            @RequestParam(name = "delivery") String payment,
+            HttpSession session
+    ){
+        Users users = getUserData();
+
+        double price = (double) session.getAttribute("Price");
+        if(users!=null) {
+            if (city != "" && address != "" && delivery != "") {
+                Orders order = new Orders(city, address, delivery,payment, price, users);
+                order.setCreatedAt(new Date());
+                ordersRepository.save(order);
+            }
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/filter")
+    public String filter2(
+            @RequestParam(name = "val") int val,
+            Model model,
+            HttpSession session) {
+
+        if(val==1){
+            List<Items>item=itemsRepository.findAllByDeletedAtNullOrderByPriceAsc();
+            model.addAttribute("itemler",item);
+            List<Categories> categories = categoriesRepository.findAllByIdGreaterThan(0L);
+            model.addAttribute("categorialar", categories);
+            return "index";
+        }
+        else if(val==2){
+            List<Items>i=itemsRepository.findAllByDeletedAtNullOrderByPriceDesc();
+            model.addAttribute("itemler",i);
+            List<Categories> categories = categoriesRepository.findAllByIdGreaterThan(0L);
+            model.addAttribute("categorialar", categories);
+            return "index";
+        }
+        else{
+            List<Items>i=itemsRepository.findAllByDeletedAtNullOrderByCreatedAtDesc();
+            model.addAttribute("itemler",i);
+            List<Categories> categories = categoriesRepository.findAllByIdGreaterThan(0L);
+            model.addAttribute("categorialar", categories);
+            return "index";
+        }
+    }
+
+
+    @PostMapping(value = "/filter2")
+    public String filter2(
+            @RequestParam(name = "id") Long id,
+            Model model,@RequestParam(name = "page", defaultValue = "1") int page,
+            HttpSession session) {
+        int pageSize = 2;
+
+        if(page<1){
+            page = 1;
+        }
+        Pageable pageable = PageRequest.of(page-1, pageSize);
+        Categories categories = categoriesRepository.getOne(id);
+        List<Items> items = itemsRepository.findAllByCategoriesLike(categories);
+
+        int totalItems = items.size();
+        int tabSize = (totalItems+pageSize-1)/pageSize;
+        model.addAttribute("tabSize", tabSize);
+        List<Categories> categories2 = categoriesRepository.findAllByIdGreaterThan(0L);
+        model.addAttribute("categorialar", categories2);
+        model.addAttribute("itemler",items);
+        return "index";
+    }
+
 
 
 

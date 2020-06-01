@@ -100,19 +100,25 @@
 -->
 
 
+<div class="container" >
+    <div class="row">
 
 
 
-    <div class="container">
+    <div class="container" style="width: 800px;margin-left: 20px">
+
         <div th:each = "i:${baskets}">
+
+
         <div class="card shopping-cart">
 
             <div class="card-body">
                 <!-- PRODUCT -->
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-2 text-center">
-                        <img class="img-responsive" th:src="@{'images/'+${i.items.file}}" alt="prewiew" width="120" height="140">
+                        <img class="img-responsive" th:src="@{'images/'+${i.items.file}}" alt="prewiew" width="90" height="100">
                     </div>
+
                     <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
                         <h4 class="product-name"><strong th:text="${i.items.name}"></strong></h4>
                         <h4>
@@ -128,25 +134,83 @@
 
                             <a th:href = "@{'/deleteBasket/'+${i.id}}">
                             <button type="button" class="btn btn-outline-danger btn-xs">
-                                <img th:src="@{/images/trash.png}" alt="image" style="width: 15px"/>
+                                <img th:src="@{/images/trash.png}" alt="image" style="width: 20px"/>
                             </button>
                             </a>
 
                             <a th:href =  "@{'/readMore/'+${i.items.id}}">
                                 <button type="button" class="btn btn-outline-primary btn-xs">
-                                    <img th:src="@{/images/great.png}" alt="image" style="width: 15px"/>
+                                    <img th:src="@{/images/great.png}" alt="image" style="width: 20px"/>
                                 </button>
                             </a>
-
+                            <!--
+                            <a th:href =  "@{'/buy/'+${i.items.id}}">
+                                <button type="button" class="btn btn-outline-dark btn-xs" style="font-size: 13px">
+                                   <img th:src="@{/images/red-cart2.png}" alt="image" style="width: 18px"/>
+                                    Buy
+                                </button>
+                            </a>
+                            -->
                         </div>
+
+
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
+
     </div>
 
 
+    <div class="card shopping-cart" style="width: 250px;height: initial">
+        <!--
+        <p th:text=" ${basketsAmount} + ' product for ' + ${basketsTotalPrice} + '$'" style="margin-left: 15px;margin-top: 20px;font-family: 'Arial Black'"></p>
+
+        <p th:text="'To pay ' + ${basketsTotalPrice} + '$'" style="margin-left: 15px;margin-top: 5px;font-family: 'Arial Black'"></p>
+
+        <a th:href =  "@{/order}" style="margin-left: 35px;margin-top: 30px">
+        <button class="btn btn-primary btn-sm" style="margin-left: 40px;font-size: 13px;margin-top: 20px;width: 100px" th:text="#{label.order}">
+        </button>
+        </a>-->
+
+
+
+
+        <table class="table table-striped" >
+
+            <thead>
+            <tr>
+                <th class="text-center"><strong th:text="#{label.goods}"></strong></th>
+                <th class="text-center" colspan="3"><strong th:text="#{label.price}"></strong></th>
+            </tr>
+            </thead>
+
+
+            <tbody>
+            <tr th:each = "i:${baskets}">
+
+                <td><strong th:text="${i.items.name}"></strong><br></td>
+                <td class="text-center" th:text="${i.items.price}" colspan="3"></td>
+            </tr>
+
+            <tr>
+                <td>
+                </td><td class="text-right"><strong th:text="#{label.total}+':'"></strong></td>
+                <td class="text-right"><strong th:text="${basketsTotalPrice} + '$'"></strong></td>
+            </tr>
+            </tbody>
+
+        </table>
+            <a th:href =  "@{/order}" style="margin-left: 35px;margin-top: 10px">
+                <button class="btn btn-primary btn-sm" style="margin-left: 40px;font-size: 15px;margin-top: 20px;width: 100px" th:text="#{label.order}">
+                </button>
+            </a>
+
+    </div>
+    </div></div>
 
 </div>
 </html>

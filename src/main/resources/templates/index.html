@@ -212,9 +212,40 @@
 
 -->
 
+<div class="row" style="margin-top: 40px">
+
+    <div style="margin-left: 250px;width: 120px">
+    <form  th:action="@{'/filter'}" method="post">
+        <div class="form-group blu-margin">
+        <select name="val"  class="custom-select mr-sm-2" id="inlineFormCustomSelect3">
+            <option value="1" th:text="#{label.asc}"></option>
+            <option value="2" th:text="#{label.desc}"></option>
+            <option value="3" th:text="#{label.def}"></option>
+        </select>
+        </div>
+        <button class="btn btn-primary btn-sm" th:text="#{label.sort}"></button>
+    </form>
+    </div>
+
+    <div style="margin-left: 30px;width: 120px">
+    <form th:action="@{'/filter2'}" method="post">
+        <!--<label th:text="#{label.choosecategory}"></label>-->
+        <div class="form-group blu-margin">
+            <select name="id" class="custom-select mr-sm-2" id="inlineFormCustomSelect2">
+                <option selected="selected" th:text="#{label.choosecategory}"></option>
+                <option th:each="c : ${categorialar}"
+                        th:value="${c.id}"
+                        th:utext="${c.name}">
+                </option>
+            </select>
+        </div>
+        <button class="btn btn-primary btn-sm" th:text="#{label.choose}"></button>
+    </form>
+    </div>
+</div>
 
 
-    <div class="container" style="margin-left: 200px;margin-top: 50px;margin-bottom: 100px">
+    <div class="container" style="margin-left: 200px;margin-top: 30px;margin-bottom: 50px">
 
         <div class="row">
         <div th:each = "i:${itemler}">
@@ -260,6 +291,10 @@
     </div>
     <!--container end-->
 
-
+    <div style="margin-left: 230px;margin-bottom: 100px">
+    <td colspan="4">
+        <a class="btn btn-info ml-1" style="font-size: 20px" th:each = "i : ${#numbers.sequence(1, tabSize)}" th:text = ${i} th:href = "@{'/?page=' + ${i}}"></a>
+    </td>
+    </div>
 </div>
 </html>

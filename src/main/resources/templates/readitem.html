@@ -137,8 +137,10 @@
                     <!--  <a th:href = "@{'/addBasket/'+${item.id}}" th:text="#{label.addToCart}" class="btn btn-primary btn-sm float-right"></a> -->
                     <div style="margin-top: 140px">
                         <a th:href = "@{'/addBasket/'+${item.id}}" class="btn btn-lg btn-outline-primary text-uppercase" th:text="#{label.addToCart}"> <i class="fas fa-shopping-cart"></i> </a>
+                        <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
                         <a th:href = "@{'/deleteItem/'+${item.id}}" class="btn btn-lg btn-outline-primary text-uppercase" th:text="#{label.delete}"> <i class="fas fa-shopping-cart" sec:authorize="hasAnyRole('ROLE_ADMIN')"></i> </a>
                         <a th:href = "@{'/editItem/'+${item.id}}" class="btn btn-lg btn-outline-primary text-uppercase" th:text="#{label.edit}"> <i class="fas fa-shopping-cart" sec:authorize="hasAnyRole('ROLE_ADMIN')"></i> </a>
+                        </div>
                     </div>
                 </article> <!-- card-body.// -->
             </aside> <!-- col.// -->
