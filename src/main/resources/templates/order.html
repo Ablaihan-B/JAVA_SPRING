@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layouts/main_no_sidebar.html">
+<div layout:fragment="myContent">
+
+
+
+    <form th:action="@{'/order'}" method="post" style="width: 400px;margin-left: 450px;margin-top: 100px" enctype="multipart/form-data">
+
+<!--
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm" th:text="#{label.city}"></label>
+            <input  name="city" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm2" th:text="#{label.address}"></label>
+            <input  name="address" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm3" th:text="#{label.delivery}"></label>
+            <input name="delivery" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>-->
+
+        <label th:text="#{label.city}"></label>
+        <div class="form-group blu-margin">
+            <select name="city" class="custom-select mr-sm-2" id="inlineFormCustomSelect2">
+                <option value="Almaty">Almaty</option>
+                <option value="Nur-Sultan">Nur-Sultan</option>
+                <option value="Shymkent">Shymkent</option>
+                <option value="Pavlodar">Pavlodar</option>
+                <option value="Aktobe">Aktobe</option>
+                <option value="Taldykorgan">Taldykorgan</option>
+                <option value="Semey">Semey</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm2" th:text="#{label.address}"></label>
+            <input  name="address" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+        <label th:text="#{label.delivery}"></label>
+        <div class="form-group blu-margin">
+            <select name="delivery" class="custom-select mr-sm-2" id="inlineFormCustomSelect3">
+                <option value="Courier" th:text="#{label.courier}"></option>
+                <option value="Pickup" th:text="#{label.pickup}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="input-group-text" id="inputGroup-sizing-sm7" th:text="#{label.payment}"></label>
+            <input  name="payment" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"><p></p>
+        </div>
+
+        <button class="btn btn-primary" style="margin-left: 300px" th:text="#{label.order}"></button><p></p>
+    </form>
+
+
+</div>
+
+
+</html>
